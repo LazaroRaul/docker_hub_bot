@@ -1,0 +1,10 @@
+version: '2.0'
+
+services:
+  app:
+    image: golang:1.10-alpine3.9
+
+    command: go run ./cmd/docker_bot.go
+    volumes:
+      - .:/go/src/github.com/uhsimelo/docker_hub_bot
+    working_dir: /go/src/github.com/uhsimelo/docker_hub_bot
