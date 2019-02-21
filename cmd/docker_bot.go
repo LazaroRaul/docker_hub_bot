@@ -9,7 +9,7 @@ import (
 	"github.com/yanzay/tbot"
 )
 func main() {
-	token := "784554178:AAEOhFBwJSZipxZFPF0tuDCwqXXj4eXq21A"
+	token := "TOKEN"
 	fmt.Println("Elemental")
 	// Create new telegram bot server using token
 	bot, err := tbot.NewServer(token)
