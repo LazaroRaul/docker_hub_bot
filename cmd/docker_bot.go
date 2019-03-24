@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 	"time"
-
+	"net"
 	"github.com/yanzay/tbot"
 )
 func main() {
-	token := "TOKEN"
+	token := "Token"
 	// Create new telegram bot server using token
 	bot, err := tbot.NewServer(token)
 	if err != nil {
@@ -31,6 +31,8 @@ func main() {
 
 	// Handle status in Docker Hub of current repositories
 	bot.HandleFunc("/status", HandleStatus)
+
+	bot.HandleFunc("/ip", GetOutboundIP)
 
 	// Display Help
 	bot.HandleFunc("/help", HelpHandler)
@@ -84,5 +86,19 @@ func ListIntegrations(message *tbot.Message) {
 func DelIntegration(message *tbot.Message) {
 	// Should list all the integrations with github and docker hub
 	message.Reply("We should delete an integration with github")
+
+}
+
+// Get preferred outbound ip of this machine
+func GetOutboundIP(message *tbot.Message) {
+    conn, err := net.Dial("udp", "8.8.8.8:80")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer conn.Close()
+
+    localAddr := conn.LocalAddr().(*net.UDPAddr)
+
+    message.Reply(localAddr.IP.String())
 
 }
